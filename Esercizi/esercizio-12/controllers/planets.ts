@@ -1,5 +1,6 @@
 import { request, response } from "express";
 
+
 let planets = [
     { id: 1, name: "Earth" },
     { id: 2, name: "Mars"}
@@ -22,7 +23,7 @@ const create = (req: request, res: response) => {
     console.log(planets)
     res.status(201).json({ msg: "the planet was created" })
 }
-const updateByUd = (req: request, res: response) => {
+const updateById = (req: request, res: response) => {
     const { id } = req.params
     const { name } = req.body
     planets = planets.map(p => p.id === id ? ({ ...p, name }) : p)
@@ -37,4 +38,4 @@ const deleteById = (req: request, res: response) => {
     res.status(200).json({ msg: "planet deleted" })
 }
 
-export {getAll, getOneById, create, updateByUd, deleteById}
+export {getAll, getOneById, create, updateById, deleteById}

@@ -1,5 +1,5 @@
-import express from "express"
-import { getAll, getOneById, create, updateByUd, deleteById } from "./controllers/planets";
+const express = require(express)
+import { getAll, getOneById, create, updateById, deleteById } from "./controllers/planets";
 
 const app = express()
 const port = 3000
@@ -23,7 +23,7 @@ app.get("/api/planets/:id", getOneById)
 
 app.post("/api/planets", create)
 
-app.put("/api/planets/:id", updateByUd)
+app.put("/api/planets/:id", updateById)
 
 app.delete("/api/planet/:id", deleteById)
 
