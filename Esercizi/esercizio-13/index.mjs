@@ -3,6 +3,7 @@ import { getAll, getOneById, create, deleteById, updateById } from "./controller
 
 
 const app = express();
+const port = 3000;
 
 app.use(express.json());
 
@@ -17,5 +18,5 @@ app.delete("/planets/:id", deleteById)
 app.put("/planets/:id", updateById)
 
 app.listen(3000, () => {
-    console.log("Server listening on port 3000");
-  });
+  console.log(`Server listening on port ${port}`);
+});
