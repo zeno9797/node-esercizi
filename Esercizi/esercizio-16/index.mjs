@@ -1,6 +1,6 @@
 import express from "express"
 import { getAll, getOneById, create, deleteById, updateById, createImage } from "./controllers.mjs";
-import {logIn} from "./usersControllers.mjs"
+import {logIn, signUp} from "./usersControllers.mjs"
 import multer from "multer";
 
 const storage = multer.diskStorage({
@@ -28,13 +28,15 @@ app.get("/planets/:id", getOneById )
 
 app.post("/planets", create )
 
-app.post("/api/users/login", logIn)
-
 app.delete("/planets/:id", deleteById)
 
 app.put("/planets/:id", updateById)
 
 app.post("/planets/:id/image", upload.single("image"), createImage)
+
+app.post("/api/users/login", logIn)
+
+app.post("/api/users/signup", signUp)
 
 app.listen(3000, () => {
     console.log(`Server listening on port ${port}`);
