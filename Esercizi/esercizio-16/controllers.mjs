@@ -1,24 +1,4 @@
-import pgPromise from "pg-promise"
-
-const db = pgPromise()("postgres://postgres:paperino@localhost:5433/esercizi")
-
-const setupDb = async () => {
-   await db.none(`
-        DROP TABLE IF EXISTS planets;
-
-        CREATE TABLE planets (
-            id SERIAL NOT NULL PRIMARY KEY,
-            name TEXT NOT NULL 
-        );
-    `)
-
-    await db.none(`INSERT INTO planets (name) VALUES ('Earth')`)
-    await db.none(`INSERT INTO planets (name) VALUES ('Mars')`)
-    
-}
-
-setupDb()
-
+import { db } from "./db.mjs"
 
 const getAll = async (req, res) => {
     const planets = await db.any("SELECT * FROM planets")
@@ -51,6 +31,19 @@ const deleteById = async (req, res) => {
     res.status(200).json({ msg: "planet deleted" })
 }
 
-export {getAll, getOneById, create, deleteById, updateById}
+const createImage = async (req, res) => {
+    console.log(req.file)
+    const { id } = req.params;
+    const fileName = req.file?.path;
+
+    if (fileName) {
+        db.none(`UPDATE planets SET image=$2 WHERE id=$1`, [id, fileName]);
+        res.status(201).json({ msg: "Planets image uploaded successfully" })
+    } else {
+        res.status(400).json({msg: "Planet image failed to upload" })
+    }
+}
+
+export { getAll, getOneById, create, deleteById, updateById, createImage }
 
 
